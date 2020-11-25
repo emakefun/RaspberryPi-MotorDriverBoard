@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-from Raspi_PWM_Servo_Driver import PWM
+from Emakefun_MotorDriver import PWM
 import time
 
-class Raspi_StepperMotor:
+class Emakefun_StepperMotor:
 	MICROSTEPS = 8
 	MICROSTEP_CURVE = [0, 50, 98, 142, 180, 212, 236, 250, 255]
 
@@ -46,40 +46,40 @@ class Raspi_StepperMotor:
 		pwm_a = pwm_b = 255
 
 		# first determine what sort of stepping procedure we're up to
-		if (style == Raspi_MotorHAT.SINGLE):
+		if (style == Emakefun_MotorHAT.SINGLE):
 				if ((self.currentstep/(self.MICROSTEPS/2)) % 2):
 				# we're at an odd step, weird
-					if (dir == Raspi_MotorHAT.FORWARD):
+					if (dir == Emakefun_MotorHAT.FORWARD):
 						self.currentstep += self.MICROSTEPS/2
 					else:
 						self.currentstep -= self.MICROSTEPS/2
 		else:
 				# go to next even step
-				if (dir == Raspi_MotorHAT.FORWARD):
+				if (dir == Emakefun_MotorHAT.FORWARD):
 					self.currentstep += self.MICROSTEPS
 				else:
 					self.currentstep -= self.MICROSTEPS
-		if (style == Raspi_MotorHAT.DOUBLE):
+		if (style == Emakefun_MotorHAT.DOUBLE):
 			if not (self.currentstep/(self.MICROSTEPS/2) % 2):
 				# we're at an even step, weird
-				if (dir == Raspi_MotorHAT.FORWARD):
+				if (dir == Emakefun_MotorHAT.FORWARD):
 					self.currentstep += self.MICROSTEPS/2
 				else:
 					self.currentstep -= self.MICROSTEPS/2
 			else:
 				# go to next odd step
-				if (dir == Raspi_MotorHAT.FORWARD):
+				if (dir == Emakefun_MotorHAT.FORWARD):
 					self.currentstep += self.MICROSTEPS
 				else:
 					self.currentstep -= self.MICROSTEPS
-		if (style == Raspi_MotorHAT.INTERLEAVE):
-			if (dir == Raspi_MotorHAT.FORWARD):
+		if (style == Emakefun_MotorHAT.INTERLEAVE):
+			if (dir == Emakefun_MotorHAT.FORWARD):
 				self.currentstep += self.MICROSTEPS/2
 			else:
 				self.currentstep -= self.MICROSTEPS/2
 
-		if (style == Raspi_MotorHAT.MICROSTEP):
-			if (dir == Raspi_MotorHAT.FORWARD):
+		if (style == Emakefun_MotorHAT.MICROSTEP):
+			if (dir == Emakefun_MotorHAT.FORWARD):
 				self.currentstep += 1
 			else:
 				self.currentstep -= 1
@@ -114,7 +114,7 @@ class Raspi_StepperMotor:
 		# set up coil energizing!
 		coils = [0, 0, 0, 0]
 
-		if (style == Raspi_MotorHAT.MICROSTEP):
+		if (style == Emakefun_MotorHAT.MICROSTEP):
 			if (self.currentstep >= 0) and (self.currentstep < self.MICROSTEPS):
 				coils = [1, 1, 0, 0]
 			elif (self.currentstep >= self.MICROSTEPS) and (self.currentstep < self.MICROSTEPS*2):
@@ -146,9 +146,9 @@ class Raspi_StepperMotor:
 		s_per_s = self.sec_per_step
 		lateststep = 0
 		
-		if (stepstyle == Raspi_MotorHAT.INTERLEAVE):
+		if (stepstyle == Emakefun_MotorHAT.INTERLEAVE):
 			s_per_s = s_per_s / 2.0
-		if (stepstyle == Raspi_MotorHAT.MICROSTEP):
+		if (stepstyle == Emakefun_MotorHAT.MICROSTEP):
 			s_per_s /= self.MICROSTEPS
 			steps *= self.MICROSTEPS
 			print (s_per_s , " sec per step")
@@ -157,14 +157,14 @@ class Raspi_StepperMotor:
 			lateststep = self.oneStep(direction, stepstyle)
 			time.sleep(s_per_s)
 
-		if (stepstyle == Raspi_MotorHAT.MICROSTEP):
+		if (stepstyle == Emakefun_MotorHAT.MICROSTEP):
 			# this is an edge case, if we are in between full steps, lets just keep going
 			# so we end on a full step
 			while (lateststep != 0) and (lateststep != self.MICROSTEPS):
 				lateststep = self.oneStep(dir, stepstyle)
 				time.sleep(s_per_s)
 		
-class Raspi_DCMotor:
+class Emakefun_DCMotor:
 	def __init__(self, controller, num):
 		self.MC = controller
 		self.motornum = num
@@ -192,13 +192,13 @@ class Raspi_DCMotor:
 	def run(self, command):
 		if not self.MC:
 			return
-		if (command == Raspi_MotorHAT.FORWARD):
+		if (command == Emakefun_MotorHAT.FORWARD):
 			self.MC.setPin(self.IN2pin, 0)
 			self.MC.setPWM(self.IN1pin, self._speed*16)
-		if (command == Raspi_MotorHAT.BACKWARD):
+		if (command == Emakefun_MotorHAT.BACKWARD):
 			self.MC.setPin(self.IN1pin, 0)
 			self.MC.setPWM(self.IN2pin, self._speed*16)
-		if (command == Raspi_MotorHAT.RELEASE):
+		if (command == Emakefun_MotorHAT.RELEASE):
 			self.MC.setPin(self.IN1pin, 0)
 			self.MC.setPin(self.IN2pin, 0)
 
@@ -210,7 +210,7 @@ class Raspi_DCMotor:
 		#self.MC._pwm.setPWM(self.PWMpin, 0, speed*16)
 		self._speed = speed
 
-class Raspi_Servo:
+class Emakefun_Servo:
 	def __init__(self, controller, num):
 		self.MC = controller
 		self.pwm_pin = [0, 1, 14, 15, 9, 12, 3, 6]
@@ -225,7 +225,7 @@ class Raspi_Servo:
 	def readDegrees(self):
 		return self.currentAngle
 
-class Raspi_MotorHAT:
+class Emakefun_MotorHAT:
 	FORWARD = 1
 	BACKWARD = 2
 	BRAKE = 3
@@ -239,9 +239,9 @@ class Raspi_MotorHAT:
 	def __init__(self, addr = 0x60, freq = 50):
 		self._i2caddr = addr            # default addr on HAT
 		self._frequency = freq		# default @1600Hz PWM freq
-		self.servos = [ Raspi_Servo(self, n) for n in range(8) ]
-		self.motors = [ Raspi_DCMotor(self, m) for m in range(4) ]
-		self.steppers = [ Raspi_StepperMotor(self, 1), Raspi_StepperMotor(self, 2) ]
+		self.servos = [ Emakefun_Servo(self, n) for n in range(8) ]
+		self.motors = [ Emakefun_DCMotor(self, m) for m in range(4) ]
+		self.steppers = [ Emakefun_StepperMotor(self, 1), Emakefun_StepperMotor(self, 2) ]
 		self._pwm =  PWM(addr, debug=False)
 		self._pwm.setPWMFreq(self._frequency)
 

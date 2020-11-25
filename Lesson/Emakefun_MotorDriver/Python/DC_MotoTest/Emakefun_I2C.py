@@ -3,10 +3,10 @@ import re
 import smbus
 
 # ===========================================================================
-# Raspi_I2C Class
+# Emakefun_I2C Class
 # ===========================================================================
 
-class Raspi_I2C(object):
+class Emakefun_I2C(object):
 
   @staticmethod
   def getPiRevision():
@@ -32,7 +32,7 @@ class Raspi_I2C(object):
   @staticmethod
   def getPiI2CBusNumber():
     # Gets the I2C bus number /dev/i2c#
-    return 1 if Raspi_I2C.getPiRevision() > 1 else 0
+    return 1 if Emakefun_I2C.getPiRevision() > 1 else 0
 
   def __init__(self, address, busnum=-1, debug=False):
     self.address = address
@@ -40,7 +40,7 @@ class Raspi_I2C(object):
     # Alternatively, you can hard-code the bus version below:
     # self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
     # self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
-    self.bus = smbus.SMBus(busnum if busnum >= 0 else Raspi_I2C.getPiI2CBusNumber())
+    self.bus = smbus.SMBus(busnum if busnum >= 0 else Emakefun_I2C.getPiI2CBusNumber())
     self.debug = debug
 
   def reverseByteOrder(self, data):
@@ -155,7 +155,7 @@ class Raspi_I2C(object):
 
 if __name__ == '__main__':
   try:
-    bus = Raspi_I2C(address=0)
+    bus = Emakefun_I2C(address=0)
     print ("Default I2C bus is accessible")
   except:
     print ("Error accessing default I2C bus")

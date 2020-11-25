@@ -2,7 +2,7 @@
 
 import time
 import math
-from Raspi_I2C import Raspi_I2C
+from Emakefun_I2C import Emakefun_I2C
 
 # ============================================================================
 # Raspi PCA9685 16-Channel PWM Servo Driver
@@ -32,7 +32,7 @@ class PWM :
   __INVRT              = 0x10
   __OUTDRV             = 0x04
 
-  general_call_i2c = Raspi_I2C(0x60)
+  general_call_i2c = Emakefun_I2C(0x60)
 
   @classmethod
   def softwareReset(cls):
@@ -40,7 +40,7 @@ class PWM :
     cls.general_call_i2c.writeRaw8(0x06)        # SWRST
 
   def __init__(self, address=0x60, debug=False):
-    self.i2c = Raspi_I2C(address)
+    self.i2c = Emakefun_I2C(address)
     self.i2c.debug = debug
     self.address = address
     self.debug = debug

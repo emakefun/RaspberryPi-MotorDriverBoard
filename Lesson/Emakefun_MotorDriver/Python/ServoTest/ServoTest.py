@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_Servo
+from Emakefun_MotorHAT import Emakefun_MotorHAT, Emakefun_Servo
 import time
-mh = Raspi_MotorHAT(addr=0x60)
+mh = Emakefun_MotorHAT(addr=0x60)
 
 myServo = mh.getServo(1)
 while (True):
