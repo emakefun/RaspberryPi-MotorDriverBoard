@@ -46,9 +46,9 @@ Emakefun_DCMotor *Emakefun_MotorShield::getMotor(uint8_t num) {
     } else if (num == 1) {
       in2 = 8; in1 = 10;
     } else if (num == 2) {
-      in2 = 7; in1 = 5;
-    } else if (num == 3) {
       in2 = 4; in1 = 2;
+    } else if (num == 3) {
+      in2 = 7; in1 = 5;
     } 
 //    dcmotors[num].PWMpin = pwm;
     dcmotors[num].IN1pin = in1;
