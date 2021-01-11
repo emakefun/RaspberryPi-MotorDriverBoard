@@ -2,21 +2,27 @@
 
 
 
-# Emakefun_MotorDriverBoard
+# RaspberryPi Motor Driver Board
 
 [English](README.md) 中文版
 
-RaspberryPi 多功能电机驱动扩展板   [深圳市易创空间科技有限公司](www.emakefun.com)出品
-![image](https://github.com/emakefun/emakefun-docs/raw/master/docs/open_source_hardware/UNO_mega2560_pic/icon.png)
+RaspberryPi 多功能电机驱动扩展板由 [深圳市易创空间科技有限公司](www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。控制接口简单采用I2C接口，兼容3.3V/5V电平。
+
+
+
+![RaspberryPi-MotorDriveBoard](E:\GitHub\RaspberryPi-MotorDriveBoard\RaspberryPi-MotorDriveBoard.jpg)
+
 
 ## 特点
 
-- 支持驱动8路舵机
-- 支持4路直流电机
-- 支持驱动2路4线步进电机
-- 板载无源蜂鸣器
-- 板载红外接收头
-- 舵机电源可切换到外部供电
+- 双电源供电，5.5~2.1mmDC头或者3.5mm接线柱，供电电压7~25V，内置DC-DC稳压电路，为Raspberry Pi供电电流可达3A
+- 驱动板IIC地址为0x60，地址可以由背面三个电阻决定
+- 12位分辨率，可调PWM频率高达1.6KHz，可配置的推挽或开漏输出
+- 支持同时驱动8路舵，3Pin(黑红蓝GVS)标准接口接线，方便连接舵机，舵机电源可切换到外部独立供电
+- 支持4路6~24V直流电机，PH2.0接口或者3.5mm接线柱，电机单路输出高达电流3A 
+- 支持同时驱动2路4线步进电机
+- 板载无源蜂鸣器，板载红外接收头
+- 主板预留2个IIC扩展接口，1个串口接口
 
 ## 功能介绍
 
