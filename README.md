@@ -6,11 +6,11 @@
 
 [English](README.md) 中文版
 
-RaspberryPi 多功能电机驱动扩展板由 ![深圳市易创空间科技有限公司](http://www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。控制接口简单采用I2C接口，兼容3.3V/5V电平。
+RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限公司](http://www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。控制接口简单采用I2C接口，兼容3.3V/5V电平。
 
 
 
-![RaspberryPi-MotorDriveBoard](https://github.com/emakefun/RaspberryPi-MotorDriveBoard/blob/master/RaspberryPi-MotorDriveBoard.jpg)
+[RaspberryPi-MotorDriveBoard](https://github.com/emakefun/RaspberryPi-MotorDriveBoard/blob/master/RaspberryPi-MotorDriveBoard.jpg)
 
 
 ## 特点
