@@ -10,7 +10,7 @@ RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限�
 
 
 
-![RaspberryPi-MotorDriveBoard](https://github.com/emakefun/RaspberryPi-MotorDriveBoard/blob/master/RaspberryPi-MotorDriveBoard.jpg)
+![RaspberryPi-MotorDriveBoard](RaspberryPi-MotorDriveBoard.jpg)
 
 
 ## 特点
