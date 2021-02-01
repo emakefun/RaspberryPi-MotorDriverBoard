@@ -205,10 +205,10 @@ void Emakefun_StepperMotor::step(uint16_t steps, uint8_t dir,  uint8_t style) {
 }
 
 uint8_t Emakefun_StepperMotor::onestep(uint8_t dir, uint8_t style) {
+  uint8_t a, b, c, d;
   uint8_t ocrb, ocra;
 
   ocra = ocrb = 255;
-
 
   // next determine what sort of stepping procedure we're up to
   if (style == SINGLE) {
@@ -248,7 +248,6 @@ uint8_t Emakefun_StepperMotor::onestep(uint8_t dir, uint8_t style) {
       currentstep -= MICROSTEPS / 2;
     }
   }
-
   if (style == MICROSTEP) {
     if (dir == FORWARD) {
       currentstep++;
@@ -256,7 +255,6 @@ uint8_t Emakefun_StepperMotor::onestep(uint8_t dir, uint8_t style) {
       // BACKWARDS
       currentstep--;
     }
-
     currentstep += MICROSTEPS * 4;
     currentstep %= MICROSTEPS * 4;
 
@@ -275,17 +273,16 @@ uint8_t Emakefun_StepperMotor::onestep(uint8_t dir, uint8_t style) {
       ocrb = microstepcurve[MICROSTEPS * 4 - currentstep];
     }
   }
-
   currentstep += MICROSTEPS * 4;
   currentstep %= MICROSTEPS * 4;
 
-  MC->setPWM(PWMApin, ocra * 16);
-  MC->setPWM(PWMBpin, ocrb * 16);
-
-
+//  if (MC->_version != 5) {
+//    MC->setPWM(PWMApin, ocra * 16);
+//    MC->setPWM(PWMBpin, ocrb * 16);
+//  }
   // release all
   uint8_t latch_state = 0; // all motor pins to 0
-
+  //Serial.println(step, DEC);
   if (style == MICROSTEP) {
     if ((currentstep >= 0) && (currentstep < MICROSTEPS))
       latch_state |= 0x03;
@@ -324,30 +321,25 @@ uint8_t Emakefun_StepperMotor::onestep(uint8_t dir, uint8_t style) {
     }
   }
 
-  if (latch_state & 0x1) {
-    // Serial.println(AIN2pin);
-    MC->setPin(AIN2pin, 1);
-  } else {
-    MC->setPin(AIN2pin, 0);
-  }
-  if (latch_state & 0x2) {
-    MC->setPin(BIN1pin, 1);
-    // Serial.println(BIN1pin);
-  } else {
-    MC->setPin(BIN1pin, 0);
-  }
-  if (latch_state & 0x4) {
-    MC->setPin(AIN1pin, 1);
-    // Serial.println(AIN1pin);
-  } else {
-    MC->setPin(AIN1pin, 0);
-  }
-  if (latch_state & 0x8) {
-    MC->setPin(BIN2pin, 1);
-    // Serial.println(BIN2pin);
-  } else {
-    MC->setPin(BIN2pin, 0);
-  }
-
+    if (latch_state & 0x1) {
+      MC->setPin(AIN2pin, LOW);
+    } else {
+      MC->setPWM(AIN2pin, ocra * 16);
+    }
+    if (latch_state & 0x2) {
+      MC->setPin(BIN1pin, LOW);
+    } else {
+      MC->setPWM(BIN1pin, ocrb * 16);
+    }
+    if (latch_state & 0x4) {
+      MC->setPin(AIN1pin, LOW);
+    } else {
+      MC->setPWM(AIN1pin, ocra * 16);
+    }
+    if (latch_state & 0x8) {
+      MC->setPin(BIN2pin, LOW);
+    } else {
+      MC->setPWM(BIN2pin, ocrb * 16);
+    }
   return currentstep;
 }

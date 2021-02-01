@@ -213,8 +213,8 @@ class Emakefun_DCMotor:
 class Emakefun_Servo:
 	def __init__(self, controller, num):
 		self.MC = controller
-		self.pwm_pin = [0, 1, 14, 15, 9, 12, 3, 6]
-		self.PWM_pin = num
+		self.pin = [0, 1, 14, 15, 9, 12, 3, 6]
+		self.PWM_pin = self.pin[num]
 		self.currentAngle = 0
 
 	def writeServo(self, angle):
