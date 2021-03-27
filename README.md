@@ -7,10 +7,7 @@
 
 RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限公司](http://www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。控制接口简单采用I2C接口，兼容3.3V/5V电平。
 
-
-
 ![RaspberryPi-MotorDriverBoard](RaspberryPi-MotorDriverBoard.jpg)
-
 
 ## 特点
 
@@ -22,6 +19,32 @@ RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限�
 - 支持同时驱动2路4线步进电机
 - 板载无源蜂鸣器，板载红外接收头
 - 主板预留2个IIC扩展接口，1个串口接口
+
+## 安装I2C库并使能
+
+由于我们驱动板是使用I2C控制PCA9685芯片输出16路PWM，所以驱动各路直流点击或者舵机，不存在树莓派IO口和控制电机对应关系。
+在使用驱动板之前，必须要先安装I2C库并使能。
+打开树莓派终端输入"sudo raspi-config"命令，然后按照下图顺序依次操作即可。
+
+![本地图片](./picture/picture1.png)
+
+![本地图片](./picture/picture2.png)
+
+![本地图片](./picture/picture3.png)
+
+![本地图片](./picture/picture4.png)
+
+以上就是开启树莓派I2C，接下来我们安装树莓I2C库在终端输入“sudo apt-get install i2c-tools”，输入完成后就可以看到正在下载I2C库，安装完成之后可以在终端输入“sudo i2cdetect -l”检测是否安装正确，若出现类似于下面的信息就说明安装正常。
+
+![本地图片](./picture/picture5.png)
+
+在终端输入“sudo i2cdetect -y 1”命令即可扫描接在I2C总线上的所有I2C设备，并打印出该设备的I2C总线地址，且我们的扩展板的I2C地址为0x60，如下图。
+
+![picture6](E:\GitHub\RaspberryPi-MotorDriveBoard\picture\picture6.png)
+
+重新启动树莓派，使新的设置生效:
+
+sudo reboot
 
 ## 功能介绍
 
