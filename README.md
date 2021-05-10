@@ -9,6 +9,12 @@ RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限�
 
 ![RaspberryPi-MotorDriverBoard](RaspberryPi-MotorDriverBoard.jpg)
 
+## 原理图
+
+#### 由于我们驱动板是使用I2C控制PCA9685芯片输出16路PWM，所有驱动直流电机或者舵机，不存在所谓的树莓派IO口和控制电机对应关系。
+详情可以看 [树莓派驱动板电路原理图](https://github.com/emakefun/RaspberryPi-MotorDriveBoard/blob/master/schematic/RaspBerryDriverBoard.pdf)
+还可以查看驱动板正反面的丝印标注。
+
 ## 特点
 
 - 双电源供电，5.5 ~ 2.1mmDC头或者3.5mm接线柱，供电电压6 ~ 25V，内置DC-DC稳压电路，为Raspberry Pi供电电流可达3A(建议使用7.4V航模电池)
@@ -22,7 +28,6 @@ RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限�
 
 ## 安装I2C库并使能
 
-由于我们驱动板是使用I2C控制PCA9685芯片输出16路PWM，所以驱动各路直流点击或者舵机，不存在树莓派IO口和控制电机对应关系。
 在使用驱动板之前，必须要先安装I2C库并使能。
 打开树莓派终端输入"sudo raspi-config"命令，然后按照下图顺序依次操作即可。
 
