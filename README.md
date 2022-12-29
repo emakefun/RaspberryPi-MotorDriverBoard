@@ -238,20 +238,20 @@ int main () {
 ``` python
 #!/usr/bin/python
 #import Raspi_MotorHAT, Raspi_DCMotor, Raspi_Stepper 
-from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
+from Emakefun_MotorHAT import Emakefun_MotorHAT, Emakefun_DCMotor, Emakefun_StepperMotor
 
 import time
 import atexit
 
 # create a default object, no changes to I2C address or frequency
-mh = Raspi_MotorHAT(0x6F)
+mh = Emakefun_MotorHAT(0x60)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
-	mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
-	mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
-	mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
-	mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+	mh.getMotor(1).run(Emakefun_MotorHAT.RELEASE)
+	mh.getMotor(2).run(Emakefun_MotorHAT.RELEASE)
+	mh.getMotor(3).run(Emakefun_MotorHAT.RELEASE)
+	mh.getMotor(4).run(Emakefun_MotorHAT.RELEASE)
 
 atexit.register(turnOffMotors)
 
@@ -260,20 +260,20 @@ myStepper.setSpeed(30)  		# 30 RPM
 
 while (True):
 	print("Single coil steps")
-	myStepper.step(100, Raspi_MotorHAT.FORWARD,  Raspi_MotorHAT.SINGLE)
-	myStepper.step(100, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.SINGLE)
+	myStepper.step(100, Emakefun_MotorHAT.FORWARD,  Emakefun_MotorHAT.SINGLE)
+	myStepper.step(100, Emakefun_MotorHAT.BACKWARD, Emakefun_MotorHAT.SINGLE)
 
 	print("Double coil steps")
-	myStepper.step(100, Raspi_MotorHAT.FORWARD,  Raspi_MotorHAT.DOUBLE)
-	myStepper.step(100, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.DOUBLE)
+	myStepper.step(100, Emakefun_MotorHAT.FORWARD,  Emakefun_MotorHAT.DOUBLE)
+	myStepper.step(100, Emakefun_MotorHAT.BACKWARD, Emakefun_MotorHAT.DOUBLE)
 
 	print("Interleaved coil steps")
-	myStepper.step(100, Raspi_MotorHAT.FORWARD,  Raspi_MotorHAT.INTERLEAVE)
-	myStepper.step(100, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.INTERLEAVE)
+	myStepper.step(100, Emakefun_MotorHAT.FORWARD,  Emakefun_MotorHAT.INTERLEAVE)
+	myStepper.step(100, Emakefun_MotorHAT.BACKWARD, Emakefun_MotorHAT.INTERLEAVE)
 
 	print("Microsteps")
-	myStepper.step(100, Raspi_MotorHAT.FORWARD,  Raspi_MotorHAT.MICROSTEP)
-	myStepper.step(100, Raspi_MotorHAT.BACKWARD, Raspi_MotorHAT.MICROSTEP)
+	myStepper.step(100, Emakefun_MotorHAT.FORWARD,  Emakefun_MotorHAT.MICROSTEP)
+	myStepper.step(100, Emakefun_MotorHAT.BACKWARD, Emakefun_MotorHAT.MICROSTEP)
 
 ```
 
