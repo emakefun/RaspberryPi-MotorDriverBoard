@@ -45,7 +45,7 @@ RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限�
 
 在终端输入“sudo i2cdetect -y 1”命令即可扫描接在I2C总线上的所有I2C设备，并打印出该设备的I2C总线地址，且我们的扩展板的I2C地址为0x60，如下图。
 另外用i2cdetect检测出还有一个0x70地址一直存在，这是一个通用地址，可以给所有从机下达指令
-![picture6](E:\GitHub\RaspberryPi-MotorDriveBoard\picture\picture6.png)
+![picture6](./picture/picture6.png)
 
 重新启动树莓派，使新的设置生效:
 
