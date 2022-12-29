@@ -107,20 +107,19 @@ int main () {
 ``` Python
 #!/usr/bin/python
 
-from Raspi_PWM_Servo_Driver import PWM
+from Emakefun_MotorHAT import Emakefun_MotorHAT, Emakefun_Servo
 import time
-pwm = PWM(0x60)
+mh = Emakefun_MotorHAT(addr=0x60)
 
-servoMin = 150  # Min pulse length out of 4096
-servoMax = 600  # Max pulse length out of 4096
-
-pwm.setPWMFreq(50)                        # Set frequency to 60 Hz
+myServo = mh.getServo(1)
 while (True):
-  # Change speed of continuous servo on channel O
-  pwm.setAllPWM(0,servoMin)
-  time.sleep(1)
-  pwm.setAllPWM(0,servoMax)
-  time.sleep(1)
+    for i in range (0, 181, 10):
+        myServo.writeServo(i)
+        time.sleep(0.02)
+    time.sleep(2)
+    for i in range (180, -1, -10):
+        myServo.writeServo(i)
+        time.sleep(0.02)
 ```
 
 ### 驱动直流电机
