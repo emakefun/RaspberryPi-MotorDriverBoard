@@ -1,5 +1,6 @@
 #ifndef _Emakefun_MotorDriver_H
 #define _Emakefun_MotorDriver_H
+
 #include "Raspi_i2c.h"
 
 #define PCA9685_SUBADR1 0x2
@@ -19,9 +20,7 @@
 #define ALLLED_OFF_L 0xFC
 #define ALLLED_OFF_H 0xFD
 
-
-class Emakefun_MotorDriver: public Raspi_I2C 
-{
+class Emakefun_MotorDriver : public Raspi_I2C {
  public:
   Emakefun_MotorDriver(uint8_t addr = 0x60);
   void begin(void);
@@ -31,8 +30,6 @@ class Emakefun_MotorDriver: public Raspi_I2C
 
  private:
   uint8_t _i2caddr;
-  int fd;
-
   uint8_t read8(uint8_t addr);
   void write8(uint8_t addr, uint8_t d);
 };

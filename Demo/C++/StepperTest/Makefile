@@ -1,7 +1,7 @@
 CROSS = 
 CC = $(CROSS)gcc
 CXX = $(CROSS)g++
-DEBUG = -g -O2
+DEBUG = -Os
 CFLAGS = $(DEBUG) -Wall -c
 
 SRCS = $(wildcard ./*.cpp)

@@ -211,19 +211,36 @@ class Emakefun_DCMotor:
 		self._speed = speed
 
 class Emakefun_Servo:
-	def __init__(self, controller, num):
-		self.MC = controller
-		self.pin = [0, 1, 14, 15, 9, 12, 3, 6]
-		self.PWM_pin = self.pin[num]
-		self.currentAngle = 0
+  def __init__(self, controller, num):
+    self.MC = controller
+    self.pin = [0, 1, 14, 15, 9, 12, 3, 6]
+    self.PWM_pin = self.pin[num]
+    self.currentAngle = 0
 
-	def writeServo(self, angle):
-		pulse = 4096*((angle*11)+500)/20000
-		self.MC.setPWM(self.PWM_pin, pulse)
-		self.currentAngle = angle
+  def writeServo(self, angle):
+    pulse = 4096 * ((angle*11)+500) / 20000
+    self.MC.setPWM(self.PWM_pin, pulse)
+    self.currentAngle = angle
 
-	def readDegrees(self):
-		return self.currentAngle
+  def writeServoWithSpeed(self, angle, speed):
+    if (speed == 10):
+      pulse = 4096 * ((angle * 11) + 500) / 20000
+      self.MC.setPWM(self.PWM_pin, pulse)
+    else:
+      if angle < self.currentAngle:
+        for i in range(self.currentAngle, angle, -1):
+          time.sleep(4 * (10 - speed) / 1000)
+          pulse = 4096 * ((i * 11) + 500) / 20000
+          self.MC.setPWM(self.PWM_pin, pulse)
+      else:
+        for i in range(self.currentAngle, angle, 1):
+          time.sleep(4 * (10 - speed) / 1000)
+          pulse = 4096 * ((i * 11) + 500) / 20000
+          self.MC.setPWM(self.PWM_pin, pulse)
+    self.currentAngle = angle
+
+  def readDegrees(self):
+    return self.currentAngle
 
 class Emakefun_MotorHAT:
 	FORWARD = 1
