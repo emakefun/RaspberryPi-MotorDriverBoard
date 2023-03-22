@@ -60,45 +60,24 @@ sudo reboot
 ``` C++
 #include "Emakefun_MotorShield.h"
 
-int main () {
-	Emakefun_MotorShield Pwm = Emakefun_MotorShield();
-	Pwm.begin(50);
-	Emakefun_Servo *myServo1 = Pwm.getServo(1);
-	Emakefun_Servo *myServo2 = Pwm.getServo(2);
-	Emakefun_Servo *myServo3 = Pwm.getServo(3);
-	Emakefun_Servo *myServo4 = Pwm.getServo(4);
-	Emakefun_Servo *myServo5 = Pwm.getServo(5);
-	Emakefun_Servo *myServo6 = Pwm.getServo(6);
-	Emakefun_Servo *myServo7 = Pwm.getServo(7);
-	Emakefun_Servo *myServo8 = Pwm.getServo(8);
+int main() {
+  Emakefun_MotorShield Pwm = Emakefun_MotorShield();
+  Pwm.begin(50);
 
-	while(1) {
-		for (int i = 0; i <= 180; i+=10)
-		{
-			myServo1->writeServo(i);
-			myServo2->writeServo(i);
-			myServo3->writeServo(i);
-			myServo4->writeServo(i);
-			myServo5->writeServo(i);
-			myServo6->writeServo(i);
-			myServo7->writeServo(i);
-			myServo8->writeServo(i);
-			delay(20);
-		}
+  // demo这里只操作舵机1, 其他舵机操作相同
+  Emakefun_Servo *myServo1 = Pwm.getServo(1);
 
-		for (int i = 180; i >= 0; i-=10)
-		{
-			myServo1->writeServo(i);
-			myServo2->writeServo(i);
-			myServo3->writeServo(i);
-			myServo4->writeServo(i);
-			myServo5->writeServo(i);
-			myServo6->writeServo(i);
-			myServo7->writeServo(i);
-			myServo8->writeServo(i);
-			delay(20);
-		}
-	}
+  // 速度值是 1 ~ 10 的正整数, 数值越大速度越快
+  int speed = 9;
+  while (true) {
+    // demo这里只操作舵机1, 其他舵机操作相同
+    myServo1->writeServo(0, speed);
+    delay(2000);
+    myServo1->writeServo(90, speed);
+    delay(2000);
+    myServo1->writeServo(180, speed);
+    delay(2000);
+  }
 }
 ```
 
@@ -112,14 +91,19 @@ import time
 mh = Emakefun_MotorHAT(addr=0x60)
 
 myServo = mh.getServo(1)
+
+# 速度值是 1 ~ 10 的正整数, 数值越大速度越快
+speed = 9
 while (True):
-    for i in range (0, 181, 10):
-        myServo.writeServo(i)
-        time.sleep(0.02)
-    time.sleep(2)
-    for i in range (180, -1, -10):
-        myServo.writeServo(i)
-        time.sleep(0.02)
+    # demo这里只操作舵机1, 其他舵机操作相同
+    myServo.writeServoWithSpeed(0, speed)
+    time.sleep(1)
+
+    myServo.writeServoWithSpeed(90, speed)
+    time.sleep(1)
+
+    myServo.writeServoWithSpeed(180, speed)
+    time.sleep(1)
 ```
 
 ### 驱动直流电机
@@ -129,23 +113,26 @@ while (True):
 ```C++
 #include "Emakefun_MotorShield.h"
 
-int main () {
-	Emakefun_MotorShield Pwm = Emakefun_MotorShield();
-	Pwm.begin(50);
-	Emakefun_DCMotor *DCmotor1 = Pwm.getMotor(1);
-	Emakefun_DCMotor *DCmotor2 = Pwm.getMotor(2);
+int main() {
+  Emakefun_MotorShield Pwm;
+  Emakefun_StepperMotor *StepperMotor_1 = Pwm.getStepper(200, 1);
+  Emakefun_StepperMotor *StepperMotor_2 = Pwm.getStepper(200, 2);
+  Pwm.begin(1600);
+  StepperMotor_1->setSpeed(400);
+  StepperMotor_2->setSpeed(400);
 
-	DCmotor1->setSpeed(255);
-	DCmotor2->setSpeed(255);
-
-	while(1) {
-		DCmotor1->run(FORWARD);
-		DCmotor2->run(FORWARD);
-		delay(5000);
-		DCmotor1->run(BACKWARD);
-		DCmotor2->run(BACKWARD);
-		delay(5000);
-	}
+  while (1) {
+    StepperMotor_1->step(200, FORWARD, DOUBLE);  // 电机1正转1圈 200步
+    StepperMotor_1->release();
+    StepperMotor_2->step(200, FORWARD, SINGLE);  // 电机2正转1圈 200步
+    StepperMotor_2->release();
+    delay(1000);
+    StepperMotor_1->step(200, BACKWARD, DOUBLE);  // 电机1反转1圈 200步
+    StepperMotor_1->release();
+    StepperMotor_2->step(200, BACKWARD, SINGLE);  // 电机2反转1圈 200步
+    StepperMotor_2->release();
+    delay(1000);
+  }
 }
 ```
 #### Python代码
@@ -291,6 +278,21 @@ while (True):
 
 5、该驱动板可接编码电机，代码正在更新......
 
+6、为了步进电机顺畅不卡顿，最好提高树莓派I2C总线速度，具体操作步骤如下，将树莓派I2C速度设置为400K：
+
+- 打开终端并编辑配置文件(需要root权限) **/boot/config.txt**
+
+- 找到以下行：
+  ```
+  #dtparam=i2c_arm=on
+  ```
+
+- 将其取消注释并将其更改为：
+  ```
+  dtparam=i2c_arm=on,i2c_arm_baudrate=400000
+  ```
+
+- 保存文件并重新启动树莓派
 
 
 
