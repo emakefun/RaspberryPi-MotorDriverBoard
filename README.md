@@ -291,13 +291,19 @@ while (True):
 
 ```
 
+## 其他
 
+额外提供了购买我司产品的热心客户编写的C#代码，编码电机的python代码给高手研究，但无法提供技术支持，有兴趣的可以自行研究
+
+编码电机作者tcotuc
+
+C#代码作者 [winter2048](https://github.com/winter2048)
 
 ### 注意事项：
 
 1、连接驱动板后，检查树莓派IIC，看是否检测到驱动板地址。[链接](https://blog.csdn.net/qq_15807167/article/details/53435831)
 
-2、执行代码时，需将Github上代码下载到本地执行，上面只是部分示例。[下载连接](https://github.com/emakefun/RaspberryPi-MotorDriveBoard)
+2、执行代码时，需将Github上代码下载到本地执行，上面只是部分示例。
 
 3、树莓派用普通锂电池供电可能会出现树莓派重启的问题，建议使用7.4V航模电池。
 
