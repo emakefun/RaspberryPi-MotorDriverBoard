@@ -109,10 +109,12 @@ public class PWM
     /// <param name="off"></param>
     public virtual void setPWM(int channel, int on, int off)
     {
-        this.i2c.write8(Convert.ToByte(this.@__LED0_ON_L + 4 * channel), Convert.ToByte(on & 0xFF));
-        this.i2c.write8(Convert.ToByte(this.@__LED0_ON_H + 4 * channel), Convert.ToByte(on >> 8));
-        this.i2c.write8(Convert.ToByte(this.@__LED0_OFF_L + 4 * channel), Convert.ToByte(off & 0xFF));
-        this.i2c.write8(Convert.ToByte(this.@__LED0_OFF_H + 4 * channel), Convert.ToByte(off >> 8));
+        byte[] writeData = new byte[] {onvert.ToByte(on & 0xFF), Convert.ToByte(on >> 8), Convert.ToByte(off & 0xFF), Convert.ToByte(off >> 8)};
+        this.i2c.writeList(Convert.ToByte(this.@__LED0_ON_L + 4 * channel), writeData);
+        //this.i2c.write8(Convert.ToByte(this.@__LED0_ON_L + 4 * channel), Convert.ToByte(on & 0xFF));
+        //this.i2c.write8(Convert.ToByte(this.@__LED0_ON_H + 4 * channel), Convert.ToByte(on >> 8));
+        //this.i2c.write8(Convert.ToByte(this.@__LED0_OFF_L + 4 * channel), Convert.ToByte(off & 0xFF));
+        //this.i2c.write8(Convert.ToByte(this.@__LED0_OFF_H + 4 * channel), Convert.ToByte(off >> 8));
     }
 
     /// <summary>
@@ -122,9 +124,11 @@ public class PWM
     /// <param name="off"></param>
     public virtual void setAllPWM(int on, int off)
     {
-        this.i2c.write8(this.@__ALL_LED_ON_L, Convert.ToByte(on & 0xFF));
-        this.i2c.write8(this.@__ALL_LED_ON_H, Convert.ToByte(on >> 8));
-        this.i2c.write8(this.@__ALL_LED_OFF_L, Convert.ToByte(off & 0xFF));
-        this.i2c.write8(this.@__ALL_LED_OFF_H, Convert.ToByte(off >> 8));
+        byte[] writeData = new byte[] {onvert.ToByte(on & 0xFF), Convert.ToByte(on >> 8), Convert.ToByte(off & 0xFF), Convert.ToByte(off >> 8)};
+        this.i2c.writeList(Convert.ToByte(this.@__ALL_LED_ON_L + 4 * channel), writeData);
+        //this.i2c.write8(this.@__ALL_LED_ON_L, Convert.ToByte(on & 0xFF));
+        //this.i2c.write8(this.@__ALL_LED_ON_H, Convert.ToByte(on >> 8));
+        //this.i2c.write8(this.@__ALL_LED_OFF_L, Convert.ToByte(off & 0xFF));
+        //this.i2c.write8(this.@__ALL_LED_OFF_H, Convert.ToByte(off >> 8));
     }
 }

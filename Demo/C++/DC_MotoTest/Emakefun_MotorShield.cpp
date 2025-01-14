@@ -48,17 +48,17 @@ Emakefun_DCMotor *Emakefun_MotorShield::getMotor(uint8_t num) {
     uint8_t in1 = 0;
     uint8_t in2 = 0;
     if (num == 0) {
-      in2 = 13;
-      in1 = 11;
+      in1 = 0;
+      in2 = 1;
     } else if (num == 1) {
-      in2 = 8;
-      in1 = 10;
+      in1 = 3;
+      in2 = 2;
     } else if (num == 2) {
-      in2 = 4;
-      in1 = 2;
+      in1 = 4;
+      in2 = 5;
     } else if (num == 3) {
-      in2 = 7;
-      in1 = 5;
+      in1 = 7;
+      in2 = 6;
     }
     //    dcmotors[num].PWMpin = pwm;
     dcmotors[num].IN1pin = in1;
@@ -83,15 +83,15 @@ Emakefun_StepperMotor *Emakefun_MotorShield::getStepper(uint16_t steps, uint8_t 
     uint8_t bin1 = 0;
     uint8_t bin2 = 0;
     if (num == 0) {
-      ain1 = 8;
-      ain2 = 10;
-      bin1 = 11;
-      bin2 = 13;
+      ain1 = 0;
+      ain2 = 1;
+      bin1 = 2;
+      bin2 = 3;
     } else if (num == 1) {
       ain1 = 4;
-      ain2 = 2;
-      bin1 = 7;
-      bin2 = 5;
+      ain2 = 5;
+      bin1 = 6;
+      bin2 = 7;
     }
     // steppers[num].PWMApin = pwma;
     // steppers[num].PWMBpin = pwmb;
@@ -104,7 +104,7 @@ Emakefun_StepperMotor *Emakefun_MotorShield::getStepper(uint16_t steps, uint8_t 
 }
 
 Emakefun_Servo *Emakefun_MotorShield::getServo(uint8_t num) {
-  uint8_t pwm_pin[8] = {0, 1, 14, 15, 9, 12, 3, 6};
+  uint8_t pwm_pin[8] = {8, 9, 10, 11, 12, 13, 14, 15};
   if (num > 8) return NULL;
   if (servos[num].servonum == 0) {
     servos[num].servonum = num;

@@ -47,21 +47,17 @@ public class Emakefun_StepperMotor
         num -= 1;
         if (num == 0)
         {
-            //self.PWMA = 8
-            this.AIN2 = 13;
-            this.AIN1 = 11;
-            //self.PWMB = 13
-            this.BIN2 = 10;
-            this.BIN1 = 8;
+            this.AIN1 = 0;
+            this.AIN2 = 1;
+            this.BIN1 = 2;
+            this.BIN2 = 3;
         }
         else if (num == 1)
         {
-            //self.PWMA = 2
-            this.AIN2 = 2;
             this.AIN1 = 4;
-            //self.PWMB = 7
-            this.BIN2 = 5;
-            this.BIN1 = 7;
+            this.AIN2 = 5;
+            this.BIN1 = 6;
+            this.BIN2 = 7;
         }
         else
         {
@@ -347,23 +343,23 @@ public class Emakefun_DCMotor
         this._speed = 0;
         if (num == 0)
         {
-            in2 = 13;
-            in1 = 11;
+            in1 = 0;
+            in2 = 1;
         }
         else if (num == 1)
         {
-            in2 = 8;
-            in1 = 10;
+            in1 = 3;
+            in2 = 2;
         }
         else if (num == 2)
         {
-            in2 = 2;
             in1 = 4;
+            in2 = 5;
         }
         else if (num == 3)
         {
-            in2 = 5;
             in1 = 7;
+            in2 = 6;
         }
         else
         {
@@ -422,14 +418,14 @@ public class Emakefun_Servo
     {
         this.MC = controller;
         this.pin = new List<int> {
-                0,
-                1,
-                14,
-                15,
+                8,
                 9,
+                10,
+                11,
                 12,
-                3,
-                6
+                13,
+                14,
+                15
             };
         this.PWM_pin = this.pin[num];
         this.currentAngle = 0;

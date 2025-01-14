@@ -22,19 +22,15 @@ class Emakefun_StepperMotor:
 		num -= 1
 
 		if (num == 0):
-			#self.PWMA = 8
-			self.AIN2 = 13
-			self.AIN1 = 11
-			#self.PWMB = 13
-			self.BIN2 = 10
-			self.BIN1 = 8
+			self.AIN1 = 0
+			self.AIN2 = 1
+			self.BIN1 = 2
+			self.BIN2 = 3
 		elif (num == 1):
-			#self.PWMA = 2
-			self.AIN2 = 2
 			self.AIN1 = 4
-			#self.PWMB = 7
-			self.BIN2 = 5
-			self.BIN1 = 7
+			self.AIN2 = 5
+			self.BIN1 = 6
+			self.BIN2 = 7
 		else:
 			raise NameError('MotorHAT Stepper must be between 1 and 2 inclusive')
 
@@ -170,19 +166,18 @@ class Emakefun_DCMotor:
 		self.motornum = num
 		in1 = in2 = 0
 		self._speed = 0
-
-		if (num == 0):
-			in2 = 13
-			in1 = 11
-		elif (num == 1):
-			in2 = 8
-			in1 = 10
-		elif (num == 2):
-			in2 = 2
-			in1 = 4
-		elif (num == 3):
-			in2 = 5
-			in1 = 7
+        if num == 0:
+            in1 = 0
+            in2 = 1
+        elif num == 1:
+            in1 = 3
+            in2 = 2
+        elif num == 2:
+            in1 = 4
+            in2 = 5
+        elif num == 3:
+            in1 = 7
+            in2 = 6
 		else:
 			raise NameError('MotorHAT Motor must be between 1 and 4 inclusive')
 		#self.PWMpin = pwm
@@ -213,7 +208,7 @@ class Emakefun_DCMotor:
 class Emakefun_Servo:
   def __init__(self, controller, num):
     self.MC = controller
-    self.pin = [0, 1, 14, 15, 9, 12, 3, 6]
+    self.pin = [8, 9, 10, 11, 12, 13, 14, 15]
     self.PWM_pin = self.pin[num]
     self.currentAngle = 0
 

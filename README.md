@@ -5,25 +5,25 @@
 # RaspberryPi Motor Driver Board
 
 
-RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限公司](http://www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。控制接口简单采用I2C接口，兼容3.3V/5V电平。
+RaspberryPi 多功能电机驱动扩展板由[深圳市易创空间科技有限公司](http://www.emakefun.com)出品的一款全功能的机器人电机驱动扩展版，目前已经升级到**V4.0**（[**V3.0老版本资料查看**](https://github.com/emakefun/RaspberryPi-MotorDriverBoard/tree/V3.0) ） 本电机驱动板适用于Raspberry Pi Zero/Zero W/Zero WH/A+/B+/2B/3B/3B+/4B。能够同时支持多路电机/步进电机/舵机/编码电机(Stepper/Motor/Servo/Encoder)，空出摄像头和DIP显示屏排线接口，并且可以多板层叠使用扩展出更多的控制接口，特别适合玩家DIY机器人,智能小车,机械手臂,智能云台等各种应用。
 
 ![RaspberryPi-MotorDriverBoard](RaspberryPi-MotorDriverBoard.jpg)
 
 ## 原理图
 
 #### 由于我们驱动板是使用I2C控制PCA9685芯片输出16路PWM，所有驱动直流电机或者舵机，不存在所谓的树莓派IO口和控制电机对应关系。
-详情可以看 [树莓派驱动板电路原理图](https://github.com/emakefun/RaspberryPi-MotorDriveBoard/blob/master/schematic/RaspBerryDriverBoard.pdf)
+详情可以看 [树莓派驱动板电路原理图](./schematic/RaspBerryDriverBoardV4.0.pdf)
 还可以查看驱动板正反面的丝印标注。
 
 ## 特点
 
-- 双电源供电，5.5 ~ 2.1mmDC头或者3.5mm接线柱，供电电压6 ~ 25V，内置DC-DC稳压电路，为Raspberry Pi供电电流可达3A(建议使用7.4V航模电池)
-- 驱动板IIC地址为0x60，地址可以由背面三个电阻决定
+- 5.5 ~ 2.1mmDC头 供电电压6 ~ 25V，内置DC-DC稳压电路，为Raspberry Pi供电3A以上 (建议使用7.4V航模电池)
+- 驱动板IIC地址为0x60，地址可以由背面6个电阻配置地址A0~A5
 - 12位分辨率，可调PWM频率高达1.6KHz，可配置的推挽或开漏输出
-- 支持同时驱动8路舵，3Pin(黑红蓝GVS)标准接口接线，方便连接舵机，舵机电源可切换到外部独立供电
+- 支持同时驱动8路舵，3Pin(黑红蓝GVS)标准接口接线，方便连接舵机，舵机电源可通过跳线帽切换到外部独立供电
 - 支持4路6~24V直流电机，PH2.0接口或者3.5mm接线柱，电机单路输出高达电流3A 
 - 支持同时驱动2路4线步进电机
-- 板载无源蜂鸣器，板载红外接收头
+- 板载无源蜂鸣器
 - 主板预留2个IIC扩展接口，1个串口接口
 
 ## 安装I2C库并使能
@@ -114,23 +114,28 @@ while (True):
 #include "Emakefun_MotorShield.h"
 
 int main() {
-  Emakefun_MotorShield Pwm;
-  Emakefun_StepperMotor *StepperMotor_1 = Pwm.getStepper(200, 1);
-  Emakefun_StepperMotor *StepperMotor_2 = Pwm.getStepper(200, 2);
-  Pwm.begin(1600);
-  StepperMotor_1->setSpeed(400);
-  StepperMotor_2->setSpeed(400);
+  Emakefun_MotorShield Pwm = Emakefun_MotorShield();
+  Pwm.begin(50);
+  Emakefun_DCMotor *DCmotor1 = Pwm.getMotor(1);
+  Emakefun_DCMotor *DCmotor2 = Pwm.getMotor(2);
+  Emakefun_DCMotor *DCmotor3 = Pwm.getMotor(3);
+  Emakefun_DCMotor *DCmotor4 = Pwm.getMotor(4);
+
+  DCmotor1->setSpeed(255);
+  DCmotor2->setSpeed(255);
+  DCmotor3->setSpeed(255);
+  DCmotor4->setSpeed(255);
 
   while (1) {
-    StepperMotor_1->step(200, FORWARD, DOUBLE);  // 电机1正转1圈 200步
-    StepperMotor_1->release();
-    StepperMotor_2->step(200, FORWARD, SINGLE);  // 电机2正转1圈 200步
-    StepperMotor_2->release();
+    DCmotor1->run(FORWARD);
+    DCmotor2->run(FORWARD);
+    DCmotor3->run(FORWARD);
+    DCmotor4->run(FORWARD);
     delay(1000);
-    StepperMotor_1->step(200, BACKWARD, DOUBLE);  // 电机1反转1圈 200步
-    StepperMotor_1->release();
-    StepperMotor_2->step(200, BACKWARD, SINGLE);  // 电机2反转1圈 200步
-    StepperMotor_2->release();
+    DCmotor1->run(BACKWARD);
+    DCmotor2->run(BACKWARD);
+    DCmotor3->run(BACKWARD);
+    DCmotor4->run(BACKWARD);
     delay(1000);
   }
 }
@@ -149,10 +154,10 @@ mh = Emakefun_MotorHAT(addr=0x60)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
-	mh.getMotor(1).run(Emakefun_MotorHAT.RELEASE)
-	mh.getMotor(2).run(Emakefun_MotorHAT.RELEASE)
-	mh.getMotor(3).run(Emakefun_MotorHAT.RELEASE)
-	mh.getMotor(4).run(Emakefun_MotorHAT.RELEASE)
+ mh.getMotor(1).run(Emakefun_MotorHAT.RELEASE)
+ mh.getMotor(2).run(Emakefun_MotorHAT.RELEASE)
+ mh.getMotor(3).run(Emakefun_MotorHAT.RELEASE)
+ mh.getMotor(4).run(Emakefun_MotorHAT.RELEASE)
 
 atexit.register(turnOffMotors)
 
@@ -167,42 +172,64 @@ myMotor.run(Emakefun_MotorHAT.RELEASE);
 
 
 while (True):
-	print ("Forward! ")
+ print ("Forward! ")
 
-	print ("\tSpeed up...")
-	for i in range(255):
-		myMotor.setSpeed(i)
-		myMotor.run(Emakefun_MotorHAT.FORWARD)
-		time.sleep(0.01)
+ print ("\tSpeed up...")
+ for i in range(255):
+  myMotor.setSpeed(i)
+  myMotor.run(Emakefun_MotorHAT.FORWARD)
+  time.sleep(0.01)
 
-	print ("\tSlow down...")
-	for i in reversed(range(255)):
-		myMotor.setSpeed(i)
-		myMotor.run(Emakefun_MotorHAT.FORWARD)
-		time.sleep(0.01)
+ print ("\tSlow down...")
+ for i in reversed(range(255)):
+  myMotor.setSpeed(i)
+  myMotor.run(Emakefun_MotorHAT.FORWARD)
+  time.sleep(0.01)
 
-	print ("Backward! ")
+ print ("Backward! ")
     
-	print ("\tSpeed up...")
-	for i in range(255):
-		myMotor.setSpeed(i)
-		myMotor.run(Emakefun_MotorHAT.BACKWARD)
-		time.sleep(0.01)
+ print ("\tSpeed up...")
+ for i in range(255):
+  myMotor.setSpeed(i)
+  myMotor.run(Emakefun_MotorHAT.BACKWARD)
+  time.sleep(0.01)
 
-	print ("\tSlow down...")
-	for i in reversed(range(255)):
-		myMotor.setSpeed(i)
-		myMotor.run(Emakefun_MotorHAT.BACKWARD)
-		time.sleep(0.01)
+ print ("\tSlow down...")
+ for i in reversed(range(255)):
+  myMotor.setSpeed(i)
+  myMotor.run(Emakefun_MotorHAT.BACKWARD)
+  time.sleep(0.01)
 
-	print ("Release")
-	myMotor.run(Emakefun_MotorHAT.RELEASE)
-	time.sleep(1.0)
+ print ("Release")
+ myMotor.run(Emakefun_MotorHAT.RELEASE)
+ time.sleep(1.0)
 ```
 
 
 
 ### 驱动步进电机
+
+本驱动板只支持42步进电机，接线方法如下：
+
+![接线顺序](./picture/stepper_connect.png)
+
+ 步进电机要驱动顺畅不卡顿，必须将树莓派I2C速度设置为400K，具体操作步骤如下，
+
+- 打开终端并编辑配置文件(需要root权限) **/boot/config.txt**
+
+- 找到以下行：
+
+  ```
+  #dtparam=i2c_arm=on
+  ```
+
+- 将其取消注释并将其更改为：
+
+  ```
+  dtparam=i2c_arm=on,i2c_arm_baudrate=400000
+  ```
+
+- 保存文件并重新启动树莓派
 
 #### C++代码
 
@@ -210,14 +237,14 @@ while (True):
 #include "Emakefun_MotorShield.h"
 
 int main () {
-	Emakefun_MotorShield Pwm = Emakefun_MotorShield();
-	Pwm.begin(50);
-	Emakefun_StepperMotor *StepperMotor1 = Pwm.getStepper(200, 1);
+ Emakefun_MotorShield Pwm = Emakefun_MotorShield();
+ Pwm.begin(50);
+ Emakefun_StepperMotor *StepperMotor1 = Pwm.getStepper(200, 1);
 
-	while(1) {
-		StepperMotor1->setSpeed(30);
-		StepperMotor1->step(100, BACKWARD,SINGLE);
-	}
+ while(1) {
+  StepperMotor1->setSpeed(30);
+  StepperMotor1->step(100, BACKWARD,SINGLE);
+ }
 }
 ```
 #### Python代码
@@ -274,25 +301,9 @@ while (True):
 
 3、树莓派用普通锂电池供电可能会出现树莓派重启的问题，建议使用7.4V航模电池。
 
-4、可用该驱动板驱动精度不高的步进电机，驱动高精度步进电机时需接专用步进电机驱动。
+4、可用该驱动板可以驱动精度不高的42步进电机，驱动高精度步进电机时需接专用步进电机驱动。
 
 5、该驱动板可接编码电机，代码正在更新......
-
-6、为了步进电机顺畅不卡顿，最好提高树莓派I2C总线速度，具体操作步骤如下，将树莓派I2C速度设置为400K：
-
-- 打开终端并编辑配置文件(需要root权限) **/boot/config.txt**
-
-- 找到以下行：
-  ```
-  #dtparam=i2c_arm=on
-  ```
-
-- 将其取消注释并将其更改为：
-  ```
-  dtparam=i2c_arm=on,i2c_arm_baudrate=400000
-  ```
-
-- 保存文件并重新启动树莓派
 
 
 
