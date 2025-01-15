@@ -79,18 +79,18 @@ class PWM :
 
   def setPWM(self, channel, on, off):
     "Sets a single PWM channel"
-        databuf = [int(on) & 0xFF , int(on) >> 8 ,int(off) & 0xFF, int(off) >> 8]
-        self.i2c.writeList(self.__LED0_ON_L + channel << 2, databuf)
-        #self.i2c.write8(self.__LED0_ON_L + 4 * channel, int(on) & 0xFF)
-        #self.i2c.write8(self.__LED0_ON_H + 4 * channel, int(on) >> 8)
-        #self.i2c.write8(self.__LED0_OFF_L + 4 * channel, int(off) & 0xFF)
-        #self.i2c.write8(self.__LED0_OFF_H + 4 * channel, int(off) >> 8)
+    #databuf = [int(on) & 0xFF , int(on) >> 8 ,int(off) & 0xFF, int(off) >> 8]
+    #self.i2c.writeList(self.__LED0_ON_L + channel << 2, databuf)
+    self.i2c.write8(self.__LED0_ON_L + 4 * channel, int(on) & 0xFF)
+    self.i2c.write8(self.__LED0_ON_H + 4 * channel, int(on) >> 8)
+    self.i2c.write8(self.__LED0_OFF_L + 4 * channel, int(off) & 0xFF)
+    self.i2c.write8(self.__LED0_OFF_H + 4 * channel, int(off) >> 8)
 
   def setAllPWM(self, on, off):
     "Sets a all PWM channels"
-        databuf = [int(on) & 0xFF , int(on) >> 8 ,int(off) & 0xFF, int(off) >> 8]
-        self.i2c.writeList(self.__ALL_LED_ON_L + channel << 2, databuf)
-        #self.i2c.write8(self.__ALL_LED_ON_L, int(on) & 0xFF)
-        #self.i2c.write8(self.__ALL_LED_ON_H, int(on) >> 8)
-        #self.i2c.write8(self.__ALL_LED_OFF_L, int(off) & 0xFF)
-        #self.i2c.write8(self.__ALL_LED_OFF_H, int(off) >> 8)
+    #databuf = [int(on) & 0xFF , int(on) >> 8 ,int(off) & 0xFF, int(off) >> 8]
+    #self.i2c.writeList(self.__ALL_LED_ON_L, databuf)
+    self.i2c.write8(self.__ALL_LED_ON_L, int(on) & 0xFF)
+    self.i2c.write8(self.__ALL_LED_ON_H, int(on) >> 8)
+    self.i2c.write8(self.__ALL_LED_OFF_L, int(off) & 0xFF)
+    self.i2c.write8(self.__ALL_LED_OFF_H, int(off) >> 8)
