@@ -13,7 +13,7 @@ int main() {
   // Emakefun_Servo *myServo8 = Pwm.getServo(8);
 
   // 速度值是 1 ~ 10 的正整数
-  int speed = 9;
+  int speed = 5;
   while (true) {
     myServo1->writeServo(0, speed);
     delay(2000);

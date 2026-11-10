@@ -11,7 +11,7 @@
 
 class Raspi_I2C {
  public:
-  Raspi_I2C() : fd_(-1), address_(0){};
+  Raspi_I2C() : fd_(-1), address_(0) {};
   void init(uint8_t address);
   void WriteReg8(uint8_t reg, uint8_t value);
   void WriteReg16(uint8_t reg, uint16_t value);
